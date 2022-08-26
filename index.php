@@ -11,7 +11,7 @@
     <div class="container">
         <div class="text-center mt-5 mb-4">
             <h2>busca</h2>
-
+<img src="" alt="">
         </div>
         <input type="text" class="form-control" id="live_search" autocomplete="off" placeholder="search ...">
     </div>
