@@ -8,7 +8,7 @@ if(isset($_POST['input'])){
     country LIKE '{$input}%' OR
     email LIKE '{$input}%' OR
     occupation LIKE '{$input}%'
-    LIMIT 3
+    LIMIT 5
     ";
     $result = mysqli_query($con, $query);
 
@@ -17,11 +17,11 @@ if(isset($_POST['input'])){
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>name</th>
-                    <th>age</th>
-                    <th>country</th>
-                    <th>email</th>
-                    <th>ocupacao</th>
+                    <th>cidade</th>
+                    <th>rua</th>
+                    <th>numero</th>
+                    <th>pais</th>
+                    <th>cep</th>
                 </tr>
             </thead>
             <tbody>
