@@ -1,3 +1,18 @@
+<?php 
+include("config.php");
+$lista = [];
+$perPage = 3;
+$page = intval(filter_input(INPUT_GET, 'p'));
+
+if($page < 1){
+    $page = 1;
+}
+$offset = ($page - 1) * $perPage;
+
+$query = "SELECT * FROM searchperson LIMIT $offset, $perPage";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +26,54 @@
     <div class="container">
         <div class="text-center mt-5 mb-4">
             <h2>busca</h2>
-<img src="" alt="">
         </div>
-        <input type="text" class="form-control" id="live_search" autocomplete="off" placeholder="search ...">
+        <input type="text" class="form-control" id="live_search" autocomplete="off" placeholder="Ex.: Cidade, CEP, rua ...">
+    </div>
+    <div class="registros">
+        <p>registros</p>
+        <?php 
+        $result = mysqli_query($con, $query);
+
+        if(mysqli_num_rows($result) > 0){?>
+            <table class="table table-bordered table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>cidade</th>
+                        <th>rua</th>
+                        <th>numero</th>
+                        <th>pais</th>
+                        <th>cep</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    while($row = mysqli_fetch_assoc($result)){
+                        $id = $row['id'];
+                        $name = $row['name'];
+                        $age = $row['age'];
+                        $country = $row['country'];
+                        $email = $row['email'];
+                        $occupation = $row['occupation'];
+                    
+                    ?>
+                    <tr>
+                        <td><?php echo $id;?></td>
+                        <td><?php echo $name;?></td>
+                        <td><?php echo $age;?></td>
+                        <td><?php echo $country;?></td>
+                        <td><?php echo $email;?></td>
+                        <td><?php echo $occupation;?></td>
+                    </tr>
+                    <?php 
+                }
+                ?>
+                </tbody>
+            </table>
+        <?php
+        }else{
+            echo "<h6 class='text-danger text-center mt-3'>Não foi encontrado informações</h6>";
+        }?>
     </div>
     <div id="searchresult">
 
@@ -34,10 +94,12 @@
                         success:function(data){
                             $("#searchresult").html(data);
                             $("#searchresult").css('display','block');
+                            $(".registros").css('display','none');
                         }
                     });
                 }else{
                     $("#searchresult").css("display","none");
+                    $(".registros").css('display','block');
                 }
             });
         });
